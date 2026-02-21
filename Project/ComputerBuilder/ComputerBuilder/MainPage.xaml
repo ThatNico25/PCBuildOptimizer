@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ComputerBuilder.MainPage"
+             Title="PC Build Optimizer"
+             Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="70,*" ColumnDefinitions="*,*">
+        <!-- Sidebar with Budget Filters -->
+        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"                      
+                            Spacing="20"
+                            BackgroundColor="#F5F5F5"
+                            VerticalOptions="Fill"
+                            HorizontalOptions="Fill" >
+
+            <!-- Minimum Budget -->
+            <HorizontalStackLayout Spacing="8" Margin="50,0,0,0">
+                <Label Text="Minimum Budget ($) : " 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       VerticalOptions="Center"
+                       TextColor="#555555"/>
+                <Entry x:Name="MinBudgetEntry" 
+                       Placeholder="0" 
+                       Keyboard="Numeric"
+                       FontSize="14"
+                       WidthRequest="100"
+                       HeightRequest="50"
+                       BackgroundColor="DimGray"
+                       VerticalOptions="Center"
+                       PlaceholderColor="#CCCCCC"/>
+            </HorizontalStackLayout>
+
+            <!-- Maximum Budget -->
+            <HorizontalStackLayout Spacing="8" Margin="50,0,0,0">
+                <Label Text="Maximum Budget ($) : " 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                        VerticalOptions="Center"
+                       TextColor="#555555"/>
+                <Entry x:Name="MaxBudgetEntry" 
+                       Placeholder="999999" 
+                        Keyboard="Numeric"
+                       FontSize="14"
+                       WidthRequest="100"
+                        VerticalOptions="Center"
+                       HeightRequest="50"
+                       BackgroundColor="DimGray"
+                       PlaceholderColor="#CCCCCC"/>
+            </HorizontalStackLayout>
+
+            <Button x:Name="SubmitForm" 
+                    Text="Get Best Performance for budget!" 
+                    Clicked="GetBestPerformanceBudget"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    CornerRadius="8"
+                    Padding="10,12"
+                    VerticalOptions="Center"
+                    Margin="70,0,0,0"
+                  />
+
+            <Button x:Name="ResetFiltersButton" 
+                   Text="Reset Filters" 
+                   Clicked="OnResetFiltersClicked"
+                   BackgroundColor="#E5E5E5"
+                   TextColor="#333333"
+                   FontAttributes="Bold"
+                   FontSize="14"
+                   CornerRadius="8"
+                   Padding="10,12"
+                   VerticalOptions="Center"
+                    Margin="50,0,0,0"/>
+
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="0" 
+                            Padding="20,0"
+                            Spacing="30"
+                            WidthRequest="530">
+            <Label Text="Bests computer for performance per dollar!" 
+             FontSize="20" 
+             FontAttributes="Bold" 
+             TextColor="White"
+             VerticalOptions="Center"
+             WidthRequest="430"
+             Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2" Grid.Column="0"
+                        x:Name="BuildsCollectionViewResult"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding BuildSelectionChangedCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference BuildsCollectionViewResult}}"
+                        Margin="10,40,10,10">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="#DDDDDD"
+                        CornerRadius="12"
+                        HasShadow="True"
+                        Padding="16"
+                        Margin="0"
+                        WidthRequest="500"
+                        HeightRequest="450"
+                        BackgroundColor="White">
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="12">
+                                <Label Text="{Binding title}" 
+                                    FontSize="32" 
+                                    FontAttributes="Bold" 
+                                    TextColor="Black"
+                                    VerticalOptions="Start"
+                                    WidthRequest="270"/>
+                                <Label Text="{Binding build_id, StringFormat='Build #{0}'}" 
+                                    FontSize="32" 
+                                    FontAttributes="Bold" 
+                                    TextColor="Black"
+                                    VerticalOptions="End"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Price -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Price :" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding total_price_usd, StringFormat='${0:F2}'}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"
+                                    FontAttributes="Bold"/>
+                            </HorizontalStackLayout>
+
+                            <!-- CPU  -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="CPU :" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding cpu_name}" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                                <Label Text="- Benchmark CPU :" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="120"/>
+                                <Label Text="{Binding cpu_compute_score, StringFormat='{0:F0}'}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Motherboard -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Motherboard :" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#666666"
+                                     WidthRequest="100"/>
+                                <Label Text="{Binding motherboard_name}" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- RAM -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="RAM:" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding ram_name }" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                                <Label Text="{Binding ram_capacity_score , StringFormat='{0:F0} GB'}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"/>
+                                <Label Text="{Binding ram_modules_message, StringFormat='- {0:F0}'}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- GPU  -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="GPU:" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding gpu_name }" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                                <Label Text="{Binding gpu_benchmark}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Storage -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Storage:" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#666666"
+                                     WidthRequest="100"/>
+                                <Label Text="{Binding storage_name }" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#333333"/>
+                                <Label Text="{Binding storage_capacity_gb, StringFormat='- {0:F0} GB'}" 
+                                     FontSize="13" 
+                                     TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Power Supply -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Psu:" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding psu_name_model }" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                                <Label Text="{Binding psu_wattage, StringFormat='- {0:F0} W'}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Case (if not laptop) -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Case:" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding case_name }" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Performance Per Dollar :" 
+                                    FontSize="20" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="250"/>
+                                <Label Text="{Binding performance_value, StringFormat='{0:F2}'}" 
+                                    FontSize="20" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- ADD photo per category -->
+                            <Image Source="{Binding image_url }" 
+                                Aspect="AspectFit" 
+                                HeightRequest="150" 
+                                WidthRequest="150"
+                                Margin="320,-35,0,0"/>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Main Content Area with Computer Cards -->
+        <VerticalStackLayout Grid.Row="1" Grid.Column="2" 
+                            Padding="20,0"
+                            Spacing="0"
+                             BackgroundColor="#373738">
+            <Label Text="All Available Builds" 
+                   FontSize="20" 
+                   FontAttributes="Bold" 
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+
+        <!-- Computer Builds List -->
+        <CollectionView Grid.Row="2" Grid.Column="2"
+                        x:Name="BuildsCollectionView"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding BuildSelectionChangedCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference BuildsCollectionView}}"
+                        Margin="10,40,10,10">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="#DDDDDD"
+                           CornerRadius="12"
+                           HasShadow="True"
+                           Padding="16"
+                           Margin="0"
+                           WidthRequest="500"
+                           HeightRequest="450"
+                           BackgroundColor="White">
+                        <VerticalStackLayout Spacing="8">
+
+                            <!-- Build ID and Type -->
+                            <HorizontalStackLayout Spacing="12">
+                                <Label Text="{Binding title}" 
+                                    FontSize="32" 
+                                    FontAttributes="Bold" 
+                                    TextColor="Black"
+                                    VerticalOptions="Start"
+                                    WidthRequest="270"/>
+                                <Label Text="{Binding build_id, StringFormat='Build #{0}'}" 
+                                       FontSize="32" 
+                                       FontAttributes="Bold" 
+                                       TextColor="Black"
+                                       VerticalOptions="End"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Price -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Price :" 
+                                       FontSize="13" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#666666"
+                                       WidthRequest="100"/>
+                                <Label Text="{Binding total_price_usd, StringFormat='${0:F2}'}" 
+                                       FontSize="13" 
+                                       TextColor="#333333"
+                                       FontAttributes="Bold"/>
+                            </HorizontalStackLayout>
+
+                            <!-- CPU  -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="CPU :" 
+                               FontSize="13" 
+                               FontAttributes="Bold" 
+                               TextColor="#666666"
+                               WidthRequest="100"/>
+                                <Label Text="{Binding cpu_name}" 
+                                 FontSize="13" 
+                                 FontAttributes="Bold" 
+                                 TextColor="#333333"/>
+                                <Label Text="- Benchmark CPU :" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="120"/>
+                                <Label Text="{Binding cpu_compute_score, StringFormat='{0:F0}'}" 
+                                  FontSize="13" 
+                                  TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Motherboard -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Motherboard :" 
+                                  FontSize="13" 
+                                  FontAttributes="Bold" 
+                                  TextColor="#666666"
+                                  WidthRequest="100"/>
+                                <Label Text="{Binding motherboard_name}" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- RAM -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="RAM:" 
+                                 FontSize="13" 
+                                 FontAttributes="Bold" 
+                                 TextColor="#666666"
+                                 WidthRequest="100"/>
+                                <Label Text="{Binding ram_name }" 
+                                      FontSize="13" 
+                                      FontAttributes="Bold" 
+                                      TextColor="#333333"/>
+                                <Label Text="{Binding ram_capacity_score , StringFormat='{0:F0} GB'}" 
+                                     FontSize="13" 
+                                     TextColor="#333333"/>
+
+                                <Label Text="{Binding ram_modules_message, StringFormat='- {0:F0}'}" 
+                                FontSize="13" 
+                                TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- GPU  -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="GPU:" 
+                                   FontSize="13" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#666666"
+                                   WidthRequest="100"/>
+                                <Label Text="{Binding gpu_name }" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#333333"/>
+                                <Label Text="{Binding gpu_benchmark}" 
+                                       FontSize="13" 
+                                       TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Storage -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Storage:" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding storage_name }" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#333333"/>
+                                <Label Text="{Binding storage_capacity_gb, StringFormat='- {0:F0} GB'}" 
+                                FontSize="13" 
+                                TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Power Supply -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Psu:" 
+                                    FontSize="13" 
+                                    FontAttributes="Bold" 
+                                    TextColor="#666666"
+                                    WidthRequest="100"/>
+                                <Label Text="{Binding psu_name_model }" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#333333"/>
+                                <Label Text="{Binding psu_wattage, StringFormat='- {0:F0} W'}" 
+                                    FontSize="13" 
+                                    TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Case (if not laptop) -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="Case:" 
+                                     FontSize="13" 
+                                     FontAttributes="Bold" 
+                                     TextColor="#666666"
+                                     WidthRequest="100"/>
+                                <Label Text="{Binding case_name }" 
+                                   FontSize="13" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#333333"/>
+                            </HorizontalStackLayout>
+
+                            <!-- ADD photo per category -->
+                            <Image Source="{Binding image_url }" 
+                                   Aspect="AspectFit" 
+                                   HeightRequest="150" 
+                                   WidthRequest="150"
+                                   Margin="0,8,0,0"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

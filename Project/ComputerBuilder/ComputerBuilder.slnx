@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ComputerBuilder/ComputerBuilder.csproj" />
+  <Project Path="MLModelDataClassifiction_WebApi/MLModelDataClassifiction_WebApi.csproj" />
+  <Project Path="PcBuilderModelAI_WebApi_ValuePrediction/PcBuilderModelAI_WebApi_ValuePrediction.csproj" />
+</Solution>

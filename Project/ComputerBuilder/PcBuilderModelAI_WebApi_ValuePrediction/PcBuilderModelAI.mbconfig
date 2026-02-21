@@ -1,0 +1,486 @@
+﻿{
+  "Scenario": "Regression",
+  "DataSource": {
+    "Version": 3,
+    "EscapeCharacter": "\"",
+    "ReadMultiLines": false,
+    "KeepDiacritics": false,
+    "KeepPunctuations": false,
+    "AllowQuoting": false,
+    "Type": "TabularFile",
+    "FilePath": "C:\\Users\\mikoa\\Documents\\result_ml_training_model.csv",
+    "Delimiter": ",",
+    "DecimalMarker": ".",
+    "HasHeader": true,
+    "ColumnProperties": [
+      {
+        "ColumnName": "build_id",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "total_price_usd",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "cpu_compute_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "cpu_multicore_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "cpu_efficiency_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "gpu_compute_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "gpu_power_efficiency",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "ram_capacity_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "ram_bandwidth_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "has_gpu",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "computer_type",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "performance_per_dollar",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      }
+    ]
+  },
+  "Environment": {
+    "Type": "LocalCPU",
+    "Version": 1
+  },
+  "RunHistory": {
+    "Version": 3,
+    "Type": "Result",
+    "Trials": [
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.8702263814017499,
+        "RuntimeInSeconds": 16.286,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e5",
+          "e0": {
+            "OutputColumnNames": [
+              "computer_type"
+            ],
+            "InputColumnNames": [
+              "computer_type"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "InputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "computer_type",
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e5": {
+            "NumberOfLeaves": 2483,
+            "MinimumExampleCountPerLeaf": 24,
+            "LearningRate": 0.39048467056148467,
+            "NumberOfTrees": 2071,
+            "SubsampleFraction": 0.44973974120946741,
+            "MaximumBinCountPerFeature": 131,
+            "FeatureFraction": 0.99999999,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 0.28506885144448041,
+            "LabelColumnName": "performance_per_dollar",
+            "FeatureColumnName": "Features"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.84440476426169864,
+        "RuntimeInSeconds": 1.751,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e4",
+          "e0": {
+            "OutputColumnNames": [
+              "computer_type"
+            ],
+            "InputColumnNames": [
+              "computer_type"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "InputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "computer_type",
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e4": {
+            "NumberOfTrees": 9,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 0.9246066,
+            "LabelColumnName": "performance_per_dollar",
+            "FeatureColumnName": "Features"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.84364732563740641,
+        "RuntimeInSeconds": 2.215,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e4",
+          "e0": {
+            "OutputColumnNames": [
+              "computer_type"
+            ],
+            "InputColumnNames": [
+              "computer_type"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "InputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "computer_type",
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e4": {
+            "NumberOfTrees": 8,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 0.9179215,
+            "LabelColumnName": "performance_per_dollar",
+            "FeatureColumnName": "Features"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.84296556151038049,
+        "RuntimeInSeconds": 1.796,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e4",
+          "e0": {
+            "OutputColumnNames": [
+              "computer_type"
+            ],
+            "InputColumnNames": [
+              "computer_type"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "InputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "computer_type",
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e4": {
+            "NumberOfTrees": 14,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 0.92233425,
+            "LabelColumnName": "performance_per_dollar",
+            "FeatureColumnName": "Features"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.84284781546634624,
+        "RuntimeInSeconds": 1.727,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e4",
+          "e0": {
+            "OutputColumnNames": [
+              "computer_type"
+            ],
+            "InputColumnNames": [
+              "computer_type"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "InputColumnNames": [
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "computer_type",
+              "total_price_usd",
+              "cpu_compute_score",
+              "cpu_multicore_score",
+              "cpu_efficiency_score",
+              "gpu_compute_score",
+              "gpu_power_efficiency",
+              "ram_capacity_score",
+              "ram_bandwidth_score",
+              "has_gpu"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e4": {
+            "NumberOfTrees": 14,
+            "NumberOfLeaves": 4,
+            "FeatureFraction": 0.98532945,
+            "LabelColumnName": "performance_per_dollar",
+            "FeatureColumnName": "Features"
+          }
+        }
+      }
+    ],
+    "Estimators": {
+      "e0": "OneHotEncoding",
+      "e1": "ReplaceMissingValues",
+      "e2": "Concatenate",
+      "e3": "FastTreeRegression",
+      "e4": "FastForestRegression",
+      "e5": "LightGbmRegression",
+      "e6": "LbfgsPoissonRegressionRegression",
+      "e7": "SdcaRegression"
+    },
+    "Schema": "e0 * e1 * e2 * (e3 + e4 + e5 + e6 + e7)",
+    "MetricName": "RSquared",
+    "ModelFilePath": "C:\\Users\\mikoa\\source\\repos\\ComputerBuilder\\PcBuilderModelAI_WebApi_ValuePrediction\\PcBuilderModelAI.mlnet"
+  },
+  "Type": "TrainingConfig",
+  "Version": 5,
+  "TrainingOption": {
+    "Version": 2,
+    "Subsampling": false,
+    "Tuner": "eci-cfo",
+    "Type": "RegressionTrainingOption",
+    "TrainingTime": 600,
+    "OptimizeMetric": "RSquared",
+    "LabelColumn": "performance_per_dollar",
+    "AvailableTrainers": [
+      "SDCA",
+      "LBFGS",
+      "LGBM",
+      "FASTTREE",
+      "FASTFOREST"
+    ],
+    "ValidationOption": {
+      "Version": 0,
+      "Type": "CrossValidationValidationOption",
+      "NumberOfFolds": 5
+    }
+  }
+}

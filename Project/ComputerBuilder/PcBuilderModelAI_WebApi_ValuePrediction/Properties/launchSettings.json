@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "PcBuilderModelAI_WebApi_ValuePrediction": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:59214;http://localhost:59215"
+    }
+  }
+}

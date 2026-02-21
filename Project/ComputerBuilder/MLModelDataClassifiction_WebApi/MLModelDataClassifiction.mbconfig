@@ -1,0 +1,409 @@
+﻿{
+  "Scenario": "Classification",
+  "DataSource": {
+    "Version": 3,
+    "EscapeCharacter": "\"",
+    "ReadMultiLines": false,
+    "KeepDiacritics": false,
+    "KeepPunctuations": false,
+    "AllowQuoting": false,
+    "Type": "TabularFile",
+    "FilePath": "C:\\Users\\mikoa\\Documents\\PcBuildDataClassification_V1.csv",
+    "Delimiter": ",",
+    "DecimalMarker": ".",
+    "HasHeader": true,
+    "ColumnProperties": [
+      {
+        "ColumnName": "build_id",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "motherboard_form_factor",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "case_type",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "gpu_compute_score",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "cpu_form_factor",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "form_factor_label",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      }
+    ]
+  },
+  "Environment": {
+    "Type": "LocalCPU",
+    "Version": 1
+  },
+  "RunHistory": {
+    "Version": 3,
+    "Type": "Result",
+    "Trials": [
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastTreeOva",
+        "Score": 1.0,
+        "RuntimeInSeconds": 9.037,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e6",
+          "e0": {
+            "OutputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ],
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "gpu_compute_score"
+            ],
+            "InputColumnNames": [
+              "gpu_compute_score"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor",
+              "gpu_compute_score"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "form_factor_label",
+            "InputColumnName": "form_factor_label",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "NumberOfTrees": 4,
+            "MaximumBinCountPerFeature": 254,
+            "FeatureFraction": 1.0,
+            "LearningRate": 0.099999999999999978,
+            "LabelColumnName": "form_factor_label",
+            "FeatureColumnName": "Features",
+            "DiskTranspose": false
+          },
+          "e6": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 1.0,
+        "RuntimeInSeconds": 0.128,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e5 * e6",
+          "e0": {
+            "OutputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ],
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "gpu_compute_score"
+            ],
+            "InputColumnNames": [
+              "gpu_compute_score"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor",
+              "gpu_compute_score"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "form_factor_label",
+            "InputColumnName": "form_factor_label",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e5": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 1.0,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 1.0,
+            "MaximumBinCountPerFeature": 254,
+            "FeatureFraction": 1.0,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "form_factor_label",
+            "FeatureColumnName": "Features"
+          },
+          "e6": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "FastTreeOva",
+        "Score": 1.0,
+        "RuntimeInSeconds": 8.435,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e6",
+          "e0": {
+            "OutputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ],
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "gpu_compute_score"
+            ],
+            "InputColumnNames": [
+              "gpu_compute_score"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor",
+              "gpu_compute_score"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "form_factor_label",
+            "InputColumnName": "form_factor_label",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 19,
+            "NumberOfTrees": 4,
+            "MaximumBinCountPerFeature": 259,
+            "FeatureFraction": 0.93259697949513554,
+            "LearningRate": 0.087014772757513167,
+            "LabelColumnName": "form_factor_label",
+            "FeatureColumnName": "Features",
+            "DiskTranspose": false
+          },
+          "e6": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 1.0,
+        "RuntimeInSeconds": 0.162,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e5 * e6",
+          "e0": {
+            "OutputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ],
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "gpu_compute_score"
+            ],
+            "InputColumnNames": [
+              "gpu_compute_score"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor",
+              "gpu_compute_score"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "form_factor_label",
+            "InputColumnName": "form_factor_label",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e5": {
+            "NumberOfLeaves": 107,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 0.99999977667298645,
+            "NumberOfTrees": 101,
+            "SubsampleFraction": 0.99999977667298645,
+            "MaximumBinCountPerFeature": 365,
+            "FeatureFraction": 0.96986427556745147,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 0.28606485023707079,
+            "LabelColumnName": "form_factor_label",
+            "FeatureColumnName": "Features"
+          },
+          "e6": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 1.0,
+        "RuntimeInSeconds": 0.134,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e5 * e6",
+          "e0": {
+            "OutputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ],
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "gpu_compute_score"
+            ],
+            "InputColumnNames": [
+              "gpu_compute_score"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "motherboard_form_factor",
+              "case_type",
+              "cpu_form_factor",
+              "gpu_compute_score"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "form_factor_label",
+            "InputColumnName": "form_factor_label",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e5": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 0.71686573860796987,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 0.95010354909348393,
+            "MaximumBinCountPerFeature": 176,
+            "FeatureFraction": 0.99999999,
+            "L1Regularization": 2.5101007088073818E-10,
+            "L2Regularization": 0.99999977667298645,
+            "LabelColumnName": "form_factor_label",
+            "FeatureColumnName": "Features"
+          },
+          "e6": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      }
+    ],
+    "Estimators": {
+      "e0": "OneHotEncoding",
+      "e1": "ReplaceMissingValues",
+      "e2": "Concatenate",
+      "e3": "MapValueToKey",
+      "e4": "FastTreeOva",
+      "e5": "LightGbmMulti",
+      "e6": "MapKeyToValue"
+    },
+    "Schema": "e0 * e1 * e2 * e3 * (e4 + e5) * e6",
+    "MetricName": "MacroAccuracy",
+    "ModelFilePath": "C:\\Users\\mikoa\\source\\repos\\ComputerBuilder\\MLModelDataClassifiction_WebApi\\MLModelDataClassifiction.mlnet"
+  },
+  "Type": "TrainingConfig",
+  "Version": 5,
+  "TrainingOption": {
+    "Version": 2,
+    "Subsampling": false,
+    "Tuner": "eci-cfo",
+    "Type": "ClassificationTrainingOption",
+    "TrainingTime": 120,
+    "OptimizeMetric": "MacroAccuracy",
+    "LabelColumn": "form_factor_label",
+    "AvailableTrainers": [
+      "LGBM",
+      "FASTTREE"
+    ],
+    "ValidationOption": {
+      "Version": 0,
+      "Type": "CrossValidationValidationOption",
+      "NumberOfFolds": 5
+    }
+  }
+}
